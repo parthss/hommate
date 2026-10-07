@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Weekly rota</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="ds/lumen/components/bundle.css">
+<script src="ds/lumen/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}a:hover{color:var(--link)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--focus-ring);outline-offset:1px}
+</style>
+</helmet>
+<div class="{{themeClass}}" style="width: 390px; height: 900px; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-alt); color: var(--label); font-family: var(--font-text); font-size: 17px; line-height: 25px; letter-spacing: -0.022em; -webkit-font-smoothing: antialiased;">
+<main style="flex: 1 1 auto; min-height: 0; overflow-y: auto; box-sizing: border-box; padding: 50px 16px 24px; display: flex; flex-direction: column; gap: 12px;">
+
+<a href="Chores.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--link);">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"></path></svg>
+Chores
+</a>
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 6px 4px;">
+<div style="display: flex; flex-direction: column;">
+<h1 style="margin: 0; font-family: var(--font-display); font-size: 32px; line-height: 36px; font-weight: 600; letter-spacing: 0.004em;">Rota</h1>
+<span style="font-size: 14px; line-height: 20px; color: var(--label-secondary);">{{weekLabel}}</span>
+</div>
+<div style="display: flex; gap: 4px;">
+<button type="button" onClick="{{prev}}" aria-label="Previous week" style="width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--surface); box-shadow: var(--shadow-card); color: var(--label); display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"></path></svg>
+</button>
+<button type="button" onClick="{{next}}" aria-label="Next week" style="width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--surface); box-shadow: var(--shadow-card); color: var(--label); display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5 16 12l-6.5 6.5"></path></svg>
+</button>
+</div>
+</header>
+
+<section aria-label="Who has which chore each day" style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 12px 10px 6px; display: flex; flex-direction: column;">
+<div style="display: grid; grid-template-columns: 40px repeat(4, minmax(0, 1fr)); gap: 4px; padding-bottom: 8px; border-bottom: 1px solid var(--separator);">
+<span></span>
+<sc-for list="{{people}}" as="p" hint-placeholder-count="4">
+<span style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+<span aria-hidden="true" style="width: 28px; height: 28px; border-radius: 50%; background: {{p.c}}; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600;">{{p.i}}</span>
+<span style="font-size: 12px; line-height: 16px; color: var(--label-secondary);">{{p.name}}</span>
+</span>
+</sc-for>
+</div>
+<sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+<div style="display: grid; grid-template-columns: 40px repeat(4, minmax(0, 1fr)); gap: 4px; padding: 8px 4px; margin: 0 -4px; min-height: 40px; border-radius: var(--radius-md); background: {{d.rowBg}};">
+<span style="display: flex; flex-direction: column; align-items: center; padding-top: 2px;">
+<span style="font-size: 12px; line-height: 16px; color: {{d.dayColor}}; font-weight: {{d.weight}};">{{d.day}}</span>
+<span style="font-size: 15px; line-height: 20px; font-weight: 600; color: {{d.dayColor}};">{{d.n}}</span>
+</span>
+<sc-for list="{{d.cells}}" as="cell" hint-placeholder-count="4">
+<span style="display: flex; flex-direction: column; align-items: stretch; gap: 4px;">
+<sc-for list="{{cell.chips}}" as="chip" hint-placeholder-count="1">
+<span role="img" aria-label="{{chip.aria}}" style="display: flex; align-items: center; justify-content: center; gap: 2px; min-height: 26px; padding: 2px 4px; border-radius: var(--radius-xs); background: {{chip.bg}}; color: {{chip.color}}; font-size: 12px; line-height: 16px; font-weight: {{chip.weight}}; text-decoration: {{chip.deco}}; text-align: center;">{{chip.label}}</span>
+</sc-for>
+</span>
+</sc-for>
+</div>
+</sc-for>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 0 6px; font-size: 12px; line-height: 16px; color: var(--label-secondary);">
+<span style="display: inline-flex; align-items: center; gap: 4px;"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 3px; background: var(--danger-tint); box-shadow: inset 0 0 0 1px var(--danger);"></span>Overdue</span>
+<span style="display: inline-flex; align-items: center; gap: 4px;"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 3px; background: var(--success-tint); box-shadow: inset 0 0 0 1px var(--success);"></span>Done</span>
+</div>
+
+<section aria-labelledby="r-grabs" style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+<h2 id="r-grabs" style="margin: 0; font-size: 17px; line-height: 21px; font-weight: 600;">Up for grabs this week</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+<a href="Chores.dc.html" style="display: inline-flex; align-items: center; min-height: 32px; padding: 0 12px; border-radius: var(--radius-pill); border: 1px dashed var(--border-control); color: var(--label); text-decoration: none; font-size: 14px;">Descale the kettle</a>
+<a href="Chores.dc.html" style="display: inline-flex; align-items: center; min-height: 32px; padding: 0 12px; border-radius: var(--radius-pill); border: 1px dashed var(--border-control); color: var(--label); text-decoration: none; font-size: 14px;">Defrost the freezer</a>
+</div>
+</section>
+
+</main>
+
+<nav aria-label="Main" style="flex: none; height: 83px; box-sizing: border-box; padding: 6px 8px 34px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--nav-glass); -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass); border-top: 1px solid var(--separator);">
+<a href="Today.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--label-secondary); font-size: 12px; line-height: 16px;">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path><circle cx="12" cy="15" r="1.5"></circle></svg>
+<span>Today</span>
+</a>
+<a href="Chores.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--link); font-size: 12px; line-height: 16px; font-weight: 600;">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 7 2 2 3.5-3.5M12 7.5h8M4 16l2 2 3.5-3.5M12 16.5h8"></path></svg>
+<span>Chores</span>
+</a>
+<a href="Expenses.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--label-secondary); font-size: 12px; line-height: 16px;">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h12v17l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5z"></path><path d="M9 8.5h6M9 12h6M9 15.5h3"></path></svg>
+<span>Expenses</span>
+</a>
+<a href="House.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--label-secondary); font-size: 12px; line-height: 16px;">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20H4z"></path><path d="M10 20v-5h4v5"></path></svg>
+<span>House</span>
+</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false,"section":"Theme"},"$preview":{"width":390,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const wk = s.wk || 0;
+    const people = [
+      { id: 'maya', name: 'You', i: 'M', c: 'var(--av-maya)' },
+      { id: 'sam', name: 'Sam', i: 'S', c: 'var(--av-sam)' },
+      { id: 'raj', name: 'Raj', i: 'R', c: 'var(--av-raj)' },
+      { id: 'leo', name: 'Leo', i: 'L', c: 'var(--av-leo)' }
+    ];
+    // chip codes: '!' overdue, '+' done
+    const thisWeek = [
+      { day: 'Mon', n: '5', today: true, m: ['Bins!', 'Dishes+', 'Hoover', 'Plants'], s: [], r: [], l: [] },
+      { day: 'Tue', n: '6', m: ['Bathroom'], s: ['Dishes'], r: [], l: [] },
+      { day: 'Wed', n: '7', m: [], s: ['Recycling'], r: ['Dishes'], l: [] },
+      { day: 'Thu', n: '8', m: ['Kitchen', 'Plants'], s: [], r: [], l: ['Dishes'] },
+      { day: 'Fri', n: '9', m: ['Dishes'], s: [], r: ['Fridge'], l: [] },
+      { day: 'Sat', n: '10', m: ['Mop'], s: ['Dishes'], r: [], l: ['Stairs'] },
+      { day: 'Sun', n: '11', m: [], s: ['Bins'], r: ['Dishes'], l: [] }
+    ];
+    const nextWeek = [
+      { day: 'Mon', n: '12', m: ['Plants'], s: [], r: [], l: ['Dishes', 'Hoover'] },
+      { day: 'Tue', n: '13', m: ['Dishes'], s: [], r: [], l: ['Bathroom'] },
+      { day: 'Wed', n: '14', m: [], s: ['Dishes'], r: ['Recycling'], l: [] },
+      { day: 'Thu', n: '15', m: ['Kitchen', 'Plants'], s: [], r: ['Dishes'], l: [] },
+      { day: 'Fri', n: '16', m: [], s: [], r: [], l: ['Dishes'] },
+      { day: 'Sat', n: '17', m: ['Dishes'], s: [], r: [], l: ['Stairs'] },
+      { day: 'Sun', n: '18', m: [], s: ['Dishes'], r: ['Bins'], l: [] }
+    ];
+    const src = wk === 0 ? thisWeek : nextWeek;
+    const names = { m: 'You', s: 'Sam', r: 'Raj', l: 'Leo' };
+    const chip = (raw, who, day) => {
+      const overdue = raw.slice(-1) === '!';
+      const done = raw.slice(-1) === '+';
+      const label = (overdue || done) ? raw.slice(0, -1) : raw;
+      return {
+        label: label,
+        aria: label + ', ' + names[who] + ', ' + day + (overdue ? ', overdue' : done ? ', done' : ''),
+        bg: overdue ? 'var(--danger-tint)' : done ? 'var(--success-tint)' : 'var(--fill)',
+        color: overdue ? 'var(--danger)' : done ? 'var(--success)' : 'var(--label)',
+        weight: overdue ? 600 : 400,
+        deco: done ? 'line-through' : 'none'
+      };
+    };
+    const days = src.map((d) => ({
+      day: d.day,
+      n: d.n,
+      rowBg: d.today ? 'var(--bg-alt)' : 'transparent',
+      dayColor: d.today ? 'var(--link)' : 'var(--label-secondary)',
+      weight: d.today ? 600 : 400,
+      cells: ['m', 's', 'r', 'l'].map((k) => ({ chips: d[k].map((c) => chip(c, k, d.day + ' ' + d.n)) }))
+    }));
+    return {
+      themeClass: this.props.dark ? 'lm-dark' : 'lm-light',
+      people: people,
+      days: days,
+      weekLabel: wk === 0 ? 'This week · 5–11 October' : 'Next week · 12–18 October',
+      prev: () => this.setState({ wk: 0 }),
+      next: () => this.setState({ wk: 1 })
+    };
+  }
+}
+</script>
+</body>
+</html>

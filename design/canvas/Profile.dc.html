@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Name and colour</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="ds/lumen/components/bundle.css">
+<script src="ds/lumen/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}a:hover{color:var(--link)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--focus-ring);outline-offset:1px}
+.btn-block{width:100%;justify-content:center;box-sizing:border-box}
+.field-full{max-width:none}
+</style>
+</helmet>
+<div class="{{themeClass}}" style="width: 390px; height: 844px; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-alt); color: var(--label); font-family: var(--font-text); font-size: 17px; line-height: 25px; letter-spacing: -0.022em; -webkit-font-smoothing: antialiased;">
+<main style="flex: 1 1 auto; min-height: 0; box-sizing: border-box; padding: 50px 24px 16px; display: flex; flex-direction: column; gap: 22px;">
+<a href="JoinHouse.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 2px; min-height: 44px; margin-left: -8px; text-decoration: none; color: var(--link);">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"></path></svg>
+Back
+</a>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<p style="margin: 0; font-size: 14px; line-height: 20px; color: var(--label-secondary);">Step 2 of 3</p>
+<h1 style="margin: 0; font-family: var(--font-display); font-size: 32px; line-height: 36px; font-weight: 600; letter-spacing: 0.004em;">About you</h1>
+</div>
+<span role="img" aria-label="Your avatar preview" style="flex: none; width: 72px; height: 72px; border-radius: 50%; background: {{pickedColor}}; color: #ffffff; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 32px; font-weight: 600; transition: background-color .3s var(--ease-standard);">M</span>
+</div>
+
+<x-import component-from-global-scope="Lumen.TextField" label="Your name" default-value="Maya" helper="Housemates see this on chores and expenses." class-name="field-full"></x-import>
+
+<fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px;">
+<legend style="padding: 0; font-weight: 600;">Pick your colour</legend>
+<p style="margin: 0 0 12px; font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">It marks your chores and expenses everywhere in Hommate.</p>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 8px;">
+<sc-for list="{{swatches}}" as="sw" hint-placeholder-count="8">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+<button type="button" onClick="{{sw.pick}}" disabled="{{sw.taken}}" aria-pressed="{{sw.selected}}" aria-label="{{sw.aria}}" style="width: 52px; height: 52px; border-radius: 50%; border: 0; padding: 0; background: {{sw.hex}}; color: #ffffff; box-shadow: {{sw.ring}}; opacity: {{sw.opacity}}; cursor: {{sw.cursor}}; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 600;">
+<sc-if value="{{sw.selected}}" hint-placeholder-val="{{false}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg></sc-if>
+<sc-if value="{{sw.taken}}" hint-placeholder-val="{{false}}"><span aria-hidden="true">{{sw.initial}}</span></sc-if>
+</button>
+<span style="font-size: 12px; line-height: 16px; color: var(--label-secondary); text-align: center;">{{sw.caption}}</span>
+</div>
+</sc-for>
+</div>
+</fieldset>
+</main>
+<footer style="flex: none; padding: 12px 24px 40px; display: flex; flex-direction: column;">
+<x-import component-from-global-scope="Lumen.Button" variant="primary" size="large" class-name="btn-block" href="Install.dc.html">Continue</x-import>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false,"section":"Theme"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const picked = s.picked || 'violet';
+    const list = [
+      { id: 'violet', name: 'Violet', hex: '#6b4fd8' },
+      { id: 'teal', name: 'Teal', hex: '#0f7b6c', takenBy: 'Sam' },
+      { id: 'orange', name: 'Orange', hex: '#b25000', takenBy: 'Raj' },
+      { id: 'rose', name: 'Rose', hex: '#b8326a', takenBy: 'Leo' },
+      { id: 'green', name: 'Green', hex: '#3d7a1f' },
+      { id: 'slate', name: 'Slate', hex: '#5c6670' },
+      { id: 'plum', name: 'Plum', hex: '#8e3fa0' },
+      { id: 'ochre', name: 'Ochre', hex: '#9a6700' }
+    ];
+    let pickedColor = '#6b4fd8';
+    const swatches = list.map((c) => {
+      const taken = !!c.takenBy;
+      const selected = c.id === picked;
+      if (selected) pickedColor = c.hex;
+      return {
+        hex: c.hex,
+        taken: taken,
+        selected: selected,
+        initial: taken ? c.takenBy.charAt(0) : '',
+        caption: taken ? c.takenBy : c.name,
+        aria: taken ? c.name + ', taken by ' + c.takenBy : c.name,
+        ring: selected ? '0 0 0 3px var(--bg-alt), 0 0 0 5px var(--label)' : 'none',
+        opacity: taken ? 0.42 : 1,
+        cursor: taken ? 'default' : 'pointer',
+        pick: () => { if (!taken) this.setState({ picked: c.id }); }
+      };
+    });
+    return {
+      themeClass: this.props.dark ? 'lm-dark' : 'lm-light',
+      swatches: swatches,
+      pickedColor: pickedColor
+    };
+  }
+}
+</script>
+</body>
+</html>

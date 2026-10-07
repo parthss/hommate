@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Report an issue</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="ds/lumen/components/bundle.css">
+<script src="ds/lumen/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}a:hover{color:var(--link)}
+button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid var(--focus-ring);outline-offset:1px}
+.btn-block{width:100%;justify-content:center;box-sizing:border-box}
+.field-full{max-width:none}
+</style>
+</helmet>
+<div class="{{themeClass}}" style="width: 390px; height: 1440px; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-alt); color: var(--label); font-family: var(--font-text); font-size: 17px; line-height: 25px; letter-spacing: -0.022em; -webkit-font-smoothing: antialiased;">
+
+<header style="flex: none; padding: 50px 8px 8px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; background: var(--nav-glass); -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass); border-bottom: 1px solid var(--separator);">
+<a href="Issues.dc.html" style="justify-self: start; display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; text-decoration: none; color: var(--link);">Cancel</a>
+<h1 style="margin: 0; font-size: 17px; line-height: 22px; font-weight: 600;">Report an issue</h1>
+<span></span>
+</header>
+
+<main style="flex: 1 1 auto; min-height: 0; overflow-y: auto; box-sizing: border-box; padding: 20px 16px 24px; display: flex; flex-direction: column; gap: 20px;">
+
+<section aria-labelledby="ri-type" style="display: flex; flex-direction: column; gap: 8px;">
+<h2 id="ri-type" style="margin: 0; padding: 0 6px; font-size: 14px; line-height: 20px; font-weight: 400; color: var(--label-secondary);">What kind of issue?</h2>
+<div role="group" aria-labelledby="ri-type" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+<sc-for list="{{types}}" as="t" hint-placeholder-count="4">
+<button type="button" onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-height: 112px; padding: 14px; border-radius: var(--radius-lg); border: 0; background: var(--surface); box-shadow: {{t.ring}}; color: var(--label); font: inherit; text-align: left; cursor: pointer;">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 50%; background: {{t.iconBg}}; color: {{t.iconFg}}; display: flex; align-items: center; justify-content: center;">
+<sc-if value="{{t.isNow}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg></sc-if>
+<sc-if value="{{t.isProperly}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 9.5A8 8 0 1 1 4 14"></path><path d="M4 4.5v5h5"></path></svg></sc-if>
+<sc-if value="{{t.isSmell}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20c0-2 2-2.5 2-4.5S8 13 8 11M12 20c0-2 2-2.5 2-4.5S12 13 12 11M16 20c0-2 2-2.5 2-4.5S16 13 16 11"></path><path d="M6 7.5h12"></path></svg></sc-if>
+<sc-if value="{{t.isOther}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5v-3.5H5A1.5 1.5 0 0 1 3.5 16V7A1.5 1.5 0 0 1 5 5.5z"></path></svg></sc-if>
+</span>
+<span style="display: flex; flex-direction: column;">
+<span style="font-weight: 600; font-size: 15px; line-height: 20px;">{{t.label}}</span>
+<span style="font-size: 12px; line-height: 16px; color: var(--label-secondary);">{{t.desc}}</span>
+</span>
+</button>
+</sc-for>
+</div>
+</section>
+
+<sc-if value="{{choreType}}" hint-placeholder-val="{{false}}">
+<section aria-labelledby="ri-chore" style="display: flex; flex-direction: column; gap: 8px;">
+<h2 id="ri-chore" style="margin: 0; padding: 0 6px; font-size: 14px; line-height: 20px; font-weight: 400; color: var(--label-secondary);">Which chore?</h2>
+<div style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 0 12px 0 16px; display: flex; flex-direction: column;">
+<button type="button" style="display: flex; align-items: center; gap: 8px; min-height: 52px; border: 0; background: none; padding: 0; color: var(--label); font: inherit; cursor: pointer; text-align: left;">
+<span style="flex: 1 1 auto;">{{choreName}}</span>
+<span style="color: var(--label-secondary);">Change</span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--label-tertiary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5 16 12l-6.5 6.5"></path></svg>
+</button>
+<div style="display: flex; align-items: center; gap: 10px; min-height: 52px; border-top: 1px solid var(--separator);">
+<span aria-hidden="true" style="flex: none; width: 28px; height: 28px; border-radius: 50%; background: {{choreWhoC}}; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">{{choreWhoI}}</span>
+<span style="font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">{{choreWhoText}}</span>
+</div>
+</div>
+</section>
+</sc-if>
+
+<x-import component-from-global-scope="Lumen.TextField" label="What’s the issue?" value="{{titleVal}}" read-only="{{yes}}" class-name="field-full"></x-import>
+
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<label for="ri-details" style="padding: 0 6px; font-size: 14px; line-height: 20px; color: var(--label-secondary);">More detail (optional)</label>
+<textarea id="ri-details" rows="3" readOnly="{{yes}}" value="{{detailVal}}" style="box-sizing: border-box; width: 100%; min-height: 96px; resize: none; padding: 12px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-control); background: var(--surface); color: var(--label); font: inherit; font-size: 17px; line-height: 23px;"></textarea>
+</div>
+
+<button type="button" style="display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 64px; border-radius: var(--radius-lg); border: 1.5px dashed var(--border-control); background: transparent; color: var(--link); font: inherit; cursor: pointer;">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 8h3l1.5-2.5h6L16.5 8h3A1.5 1.5 0 0 1 21 9.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5v-9A1.5 1.5 0 0 1 4.5 8z"></path><circle cx="12" cy="13.5" r="3.5"></circle></svg>
+Add a photo
+</button>
+
+<section aria-labelledby="ri-tag" style="display: flex; flex-direction: column; gap: 8px;">
+<h2 id="ri-tag" style="margin: 0; padding: 0 6px; font-size: 14px; line-height: 20px; font-weight: 400; color: var(--label-secondary);">Who should get a nudge?</h2>
+<div role="group" aria-labelledby="ri-tag" style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 14px 12px 10px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;">
+<sc-for list="{{tags}}" as="g" hint-placeholder-count="4">
+<button type="button" onClick="{{g.pick}}" aria-pressed="{{g.on}}" style="display: flex; flex-direction: column; align-items: center; gap: 6px; border: 0; background: none; padding: 4px 0; cursor: pointer; color: var(--label); font: inherit; font-size: 14px; line-height: 20px;">
+<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 50%; background: {{g.c}}; color: {{g.fg}}; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 600; box-shadow: {{g.ring}};">
+<sc-if value="{{g.isAll}}" hint-placeholder-val="{{false}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V20H4z"></path><path d="M10 20v-5h4v5"></path></svg></sc-if>
+{{g.i}}
+</span>
+<span style="font-weight: {{g.weight}};">{{g.label}}</span>
+</button>
+</sc-for>
+</div>
+<p style="margin: 0; padding: 0 6px; font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">Everyone can see the issue. Only the person you pick gets a notification.</p>
+</section>
+
+<div style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 12px 16px; display: flex; flex-direction: column; gap: 4px;">
+<x-import component-from-global-scope="Lumen.Switch" label="Post without my name" checked="{{anon}}" on-change="{{setAnon}}" full-width="{{yes}}"></x-import>
+<span style="font-size: 12px; line-height: 16px; color: var(--label-secondary); padding-right: 64px;">Housemates see the issue, but not who posted it.</span>
+</div>
+
+<p style="margin: 0; padding: 0 6px; font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">Everyone at Elm Road can see this. Keep it kind. It’s easier to sort things out that way.</p>
+
+</main>
+<footer style="flex: none; padding: 12px 16px 34px; background: var(--nav-glass); -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass); border-top: 1px solid var(--separator); display: flex; flex-direction: column;">
+<x-import component-from-global-scope="Lumen.Button" variant="primary" size="large" class-name="btn-block" href="IssueDetail.dc.html">Post issue</x-import>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false,"section":"Theme"},"type":{"editor":"enum","options":["now","properly","smell","other"],"default":"smell","section":"State"},"$preview":{"width":390,"height":1440}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const type = s.type || this.props.type || 'smell';
+    const defs = {
+      now: { label: 'Needs doing now', desc: 'A chore can’t wait', bg: 'var(--danger-tint)', fg: 'var(--danger)',
+        title: 'Recycling bin is full', detail: 'It’s spilling onto the kitchen floor. Can it go out today?',
+        chore: 'Put recycling out', whoI: 'S', whoC: 'var(--av-sam)', whoText: 'Sam’s turn this week · Sam gets the nudge', tag: 'sam' },
+      properly: { label: 'Not done properly', desc: 'A chore needs redoing', bg: 'var(--bg-alt)', fg: 'var(--label-secondary)',
+        title: 'Crumbs left all over the stairs', detail: 'The landing and bottom three steps were missed.',
+        chore: 'Hoover stairs', whoI: 'L', whoC: 'var(--av-leo)', whoText: 'Done by Leo on Sat 3 Oct · Leo gets the nudge', tag: 'leo' },
+      smell: { label: 'Mess or smell', desc: 'Something’s grim', bg: 'var(--bg-alt)', fg: 'var(--label-secondary)',
+        title: 'Microwave smells of old curry', detail: 'It’s really strong when you open the door. Whoever heated the curry, please give it a wipe.',
+        tag: 'all' },
+      other: { label: 'Something else', desc: 'Anything the house should know', bg: 'var(--bg-alt)', fg: 'var(--label-secondary)',
+        title: 'Hall light keeps flickering', detail: 'Might just need a new bulb.', tag: 'all' }
+    };
+    const d = defs[type];
+    const tag = s.tag || d.tag;
+    const tagDefs = [
+      { id: 'all', label: 'Everyone', i: '', c: 'var(--fill)', fg: 'var(--label)' },
+      { id: 'sam', label: 'Sam', i: 'S', c: 'var(--av-sam)', fg: '#ffffff' },
+      { id: 'raj', label: 'Raj', i: 'R', c: 'var(--av-raj)', fg: '#ffffff' },
+      { id: 'leo', label: 'Leo', i: 'L', c: 'var(--av-leo)', fg: '#ffffff' }
+    ];
+    return {
+      themeClass: this.props.dark ? 'lm-dark' : 'lm-light',
+      yes: true,
+      types: ['now', 'properly', 'smell', 'other'].map((k) => ({
+        label: defs[k].label, desc: defs[k].desc, iconBg: defs[k].bg, iconFg: defs[k].fg,
+        isNow: k === 'now', isProperly: k === 'properly', isSmell: k === 'smell', isOther: k === 'other',
+        on: k === type,
+        ring: k === type ? '0 0 0 2px var(--accent)' : 'var(--shadow-card)',
+        pick: () => this.setState({ type: k, tag: null })
+      })),
+      choreType: type === 'now' || type === 'properly',
+      choreName: d.chore || '',
+      choreWhoI: d.whoI || '',
+      choreWhoC: d.whoC || 'transparent',
+      choreWhoText: d.whoText || '',
+      titleVal: d.title,
+      detailVal: d.detail,
+      tags: tagDefs.map((g) => ({
+        label: g.label, i: g.i, c: g.c, fg: g.fg, isAll: g.id === 'all', on: g.id === tag,
+        ring: g.id === tag ? '0 0 0 3px var(--surface), 0 0 0 5px var(--label)' : 'none',
+        weight: g.id === tag ? 600 : 400,
+        pick: () => this.setState({ tag: g.id })
+      })),
+      anon: !!s.anon,
+      setAnon: (v) => this.setState({ anon: v })
+    };
+  }
+}
+</script>
+</body>
+</html>

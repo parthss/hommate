@@ -1,0 +1,56 @@
+/* Lumen tokens as CSS custom properties (from ds/lumen/tokens.json), plus the app's housemate colours.
+   Light theme on :root / .lm-light, dark theme on .lm-dark. */
+:root, .lm-light {
+  --bg: #ffffff; --bg-alt: #f5f5f7; --surface: #ffffff; --fill: #e8e8ed;
+  --nav-glass: rgba(251, 251, 253, 0.8); --separator: #d2d2d7;
+  --label: #1d1d1f; --label-secondary: #6e6e73; --label-tertiary: #86868b;
+  --accent: #0071e3; --accent-hover: #0077ed; --on-accent: #ffffff; --link: #0066cc;
+  --border-control: #86868b; --focus-ring: #0071e3; --highlight: #b64400;
+  --success: #008009; --danger: #d70015; --inverse-bg: #1d1d1f; --inverse-label: #f5f5f7;
+  --switch-on: #30a14e; --switch-off: #e9e9ea; --switch-knob: #ffffff;
+  --segment-track: rgba(118, 118, 128, 0.12); --segment-thumb: #ffffff;
+  --shadow-card: 2px 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 2px 4px 16px rgba(0, 0, 0, 0.16);
+  --shadow-overlay: 0 12px 40px rgba(0, 0, 0, 0.14);
+  --shadow-knob: 0 3px 8px rgba(0, 0, 0, 0.15), 0 3px 1px rgba(0, 0, 0, 0.06);
+  --shadow-segment-thumb: 0 3px 8px rgba(0, 0, 0, 0.12), 0 3px 1px rgba(0, 0, 0, 0.04);
+  --danger-tint: rgba(215, 0, 21, 0.07);
+  --success-tint: rgba(0, 128, 9, 0.08);
+
+  --font-display: "SF Pro Display", "SF Pro Icons", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-text: "SF Pro Text", "SF Pro Icons", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, Menlo, Monaco, monospace;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px;
+  --space-8: 32px; --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-30: 120px;
+  --radius-xs: 5px; --radius-control-inner: 7px; --radius-sm: 8px; --radius-control: 9px;
+  --radius-md: 12px; --radius-lg: 18px; --radius-xl: 28px; --radius-pill: 980px;
+  --content-width: 980px; --content-width-wide: 1440px; --gutter: 22px; --nav-height: 44px; --tile-gap: 12px;
+  --blur-glass: saturate(180%) blur(20px);
+  --ease-standard: cubic-bezier(0.4, 0, 0.6, 1);
+  --ease-switch: cubic-bezier(0.3, 0.7, 0.4, 1.1);
+
+  /* Housemate avatar colours: white initials hold 5:1+ on each, in both themes */
+  --av-maya: #6b4fd8;
+  --av-sam: #0f7b6c;
+  --av-raj: #b25000;
+  --av-leo: #b8326a;
+}
+.lm-dark {
+  --bg: #000000; --bg-alt: #161617; --surface: #1d1d1f; --fill: #333336;
+  --nav-glass: rgba(22, 22, 23, 0.8); --separator: #424245;
+  --label: #f5f5f7; --label-secondary: #a1a1a6; --label-tertiary: #6e6e73;
+  --accent: #0071e3; --accent-hover: #0077ed; --on-accent: #ffffff; --link: #2997ff;
+  --border-control: #86868b; --focus-ring: #2997ff; --highlight: #ff791b;
+  --success: #30d158; --danger: #ff6961; --inverse-bg: #f5f5f7; --inverse-label: #1d1d1f;
+  --switch-on: #30d158; --switch-off: #39393d; --switch-knob: #ffffff;
+  --segment-track: rgba(118, 118, 128, 0.24); --segment-thumb: #636366;
+  --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --shadow-card-hover: 0 0 0 1px rgba(255, 255, 255, 0.12);
+  --shadow-overlay: 0 12px 40px rgba(0, 0, 0, 0.6);
+  --shadow-knob: 0 3px 8px rgba(0, 0, 0, 0.3), 0 3px 1px rgba(0, 0, 0, 0.12);
+  --shadow-segment-thumb: 0 3px 8px rgba(0, 0, 0, 0.3);
+  --danger-tint: rgba(255, 105, 97, 0.14);
+  --success-tint: rgba(48, 209, 88, 0.12);
+}
+.lm-light, .lm-dark { color-scheme: light dark; }

@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>New expense</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="ds/lumen/components/bundle.css">
+<script src="ds/lumen/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}a:hover{color:var(--link)}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--focus-ring);outline-offset:1px}
+.btn-block{width:100%;justify-content:center;box-sizing:border-box}
+.seg-full{display:grid;width:100%}
+.field-full{max-width:none}
+</style>
+</helmet>
+<div class="{{themeClass}}" style="width: 390px; height: 1380px; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-alt); color: var(--label); font-family: var(--font-text); font-size: 17px; line-height: 25px; letter-spacing: -0.022em; -webkit-font-smoothing: antialiased;">
+
+<header style="flex: none; padding: 50px 8px 8px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; background: var(--nav-glass); -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass); border-bottom: 1px solid var(--separator);">
+<a href="Expenses.dc.html" style="justify-self: start; display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; text-decoration: none; color: var(--link);">Cancel</a>
+<h1 style="margin: 0; font-size: 17px; line-height: 22px; font-weight: 600;">New expense</h1>
+<span></span>
+</header>
+
+<main style="flex: 1 1 auto; min-height: 0; overflow-y: auto; box-sizing: border-box; padding: 20px 16px 24px; display: flex; flex-direction: column; gap: 20px;">
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px 0 0;">
+<label for="ae-amount" style="font-size: 14px; line-height: 20px; color: var(--label-secondary);">Amount</label>
+<div style="display: flex; align-items: baseline; justify-content: center; gap: 2px;">
+<span aria-hidden="true" style="font-family: var(--font-display); font-size: 40px; line-height: 60px; font-weight: 600; color: var(--label-secondary);">£</span>
+<input id="ae-amount" type="text" inputMode="decimal" value="42.60" readOnly="{{yes}}" style="width: 170px; border: 0; background: transparent; color: var(--label); font-family: var(--font-display); font-size: 56px; line-height: 60px; font-weight: 600; padding: 0; text-align: left;">
+</div>
+</div>
+
+<x-import component-from-global-scope="Lumen.TextField" label="What was it for?" default-value="Tesco shop" class-name="field-full"></x-import>
+
+<section aria-labelledby="ae-paid" style="display: flex; flex-direction: column; gap: 8px;">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 0 6px;">
+<h2 id="ae-paid" style="margin: 0; font-size: 14px; line-height: 20px; font-weight: 400; color: var(--label-secondary);">Paid by</h2>
+<span style="font-size: 12px; line-height: 16px; color: var(--label-secondary);">Tap everyone who paid</span>
+</div>
+<div style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 14px 12px 12px; display: flex; flex-direction: column; gap: 10px;">
+<div role="group" aria-labelledby="ae-paid" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;">
+<sc-for list="{{payers}}" as="p" hint-placeholder-count="4">
+<button type="button" onClick="{{p.toggle}}" aria-pressed="{{p.on}}" aria-label="{{p.aria}}" style="display: flex; flex-direction: column; align-items: center; gap: 6px; border: 0; background: none; padding: 4px 0; cursor: pointer; color: var(--label); font: inherit; font-size: 14px; line-height: 20px;">
+<span aria-hidden="true" style="position: relative; width: 44px; height: 44px; border-radius: 50%; background: {{p.c}}; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 600; box-shadow: {{p.ring}}; opacity: {{p.fade}};">
+{{p.i}}
+<sc-if value="{{p.on}}" hint-placeholder-val="{{false}}">
+<span style="position: absolute; right: -4px; bottom: -4px; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: var(--on-accent); box-shadow: 0 0 0 2px var(--surface); display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg></span>
+</sc-if>
+</span>
+<span style="font-weight: {{p.weight}};">{{p.short}}</span>
+</button>
+</sc-for>
+</div>
+
+<sc-if value="{{single}}" hint-placeholder-val="{{true}}">
+<p style="margin: 0; padding: 10px 4px 0; border-top: 1px solid var(--separator); font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">{{singleText}}</p>
+</sc-if>
+
+<sc-if value="{{multi}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; border-top: 1px solid var(--separator);">
+<span style="padding: 10px 4px 2px; font-size: 14px; line-height: 20px; color: var(--label-secondary);">How much did each person pay?</span>
+<sc-for list="{{paidRows}}" as="pr" hint-placeholder-count="2">
+<div style="display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 4px; border-top: {{pr.border}};">
+<span aria-hidden="true" style="flex: none; width: 28px; height: 28px; border-radius: 50%; background: {{pr.c}}; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">{{pr.i}}</span>
+<label for="{{pr.id}}" style="flex: 1 1 auto;">{{pr.name}}</label>
+<span style="display: flex; align-items: center; gap: 4px;">
+<span aria-hidden="true" style="color: var(--label-secondary);">£</span>
+<input id="{{pr.id}}" type="text" inputMode="decimal" value="{{pr.val}}" readOnly="{{yes}}" style="width: 84px; height: 40px; box-sizing: border-box; border: 1px solid var(--border-control); border-radius: var(--radius-md); background: var(--surface); color: var(--label); font: inherit; text-align: right; padding: 0 10px;">
+</span>
+</div>
+</sc-for>
+<p role="status" style="margin: 0; padding: 8px 4px 0; display: flex; align-items: center; gap: 4px; font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: {{paidColor}};">
+<sc-if value="{{paidOk}}" hint-placeholder-val="{{true}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg></sc-if>
+<sc-if value="{{paidBad}}" hint-placeholder-val="{{false}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 11v5.5"></path><circle cx="12" cy="7.75" r="0.6" fill="currentColor" stroke="none"></circle></svg></sc-if>
+{{paidStatus}}
+</p>
+</div>
+</sc-if>
+</div>
+</section>
+
+<div style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 0 12px 0 16px;">
+<button type="button" style="width: 100%; display: flex; align-items: center; gap: 8px; min-height: 52px; border: 0; background: none; padding: 0; color: var(--label); font: inherit; cursor: pointer; text-align: left;">
+<span style="flex: 1 1 auto;">Date</span>
+<span style="color: var(--label-secondary);">Yesterday, Sun 4 Oct</span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--label-tertiary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5 16 12l-6.5 6.5"></path></svg>
+</button>
+</div>
+
+<section aria-labelledby="ae-split" style="display: flex; flex-direction: column; gap: 8px;">
+<h2 id="ae-split" style="margin: 0; padding: 0 6px; font-size: 14px; line-height: 20px; font-weight: 400; color: var(--label-secondary);">Split</h2>
+<div style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 12px 12px 4px 4px; display: flex; flex-direction: column; gap: 6px;">
+<div style="padding-left: 8px;">
+<x-import component-from-global-scope="Lumen.SegmentedControl" variant="inset" label="Split type" options="{{splitOpts}}" value="{{split}}" on-change="{{setSplit}}" class-name="seg-full"></x-import>
+</div>
+<ul aria-label="Each person’s share" style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;">
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+<li style="display: flex; align-items: center; gap: 6px; min-height: 64px; border-top: {{r.border}};">
+<button type="button" onClick="{{r.flip}}" aria-pressed="{{r.on}}" aria-label="{{r.incLabel}}" style="flex: none; width: 44px; height: 44px; border: 0; background: none; padding: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--on-accent);">
+<span style="width: 22px; height: 22px; box-sizing: border-box; border-radius: var(--radius-xs); border: {{r.boxBorder}}; background: {{r.boxBg}}; display: flex; align-items: center; justify-content: center;">
+<sc-if value="{{r.on}}" hint-placeholder-val="{{true}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg></sc-if>
+</span>
+</button>
+<span aria-hidden="true" style="flex: none; width: 32px; height: 32px; border-radius: 50%; background: {{r.c}}; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; opacity: {{r.fade}};">{{r.i}}</span>
+<span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; padding-left: 4px;">
+<span style="color: {{r.nameColor}};">{{r.name}}</span>
+<sc-if value="{{r.showSub}}" hint-placeholder-val="{{false}}"><span style="font-size: 14px; line-height: 20px; color: var(--label-secondary);">{{r.sub}}</span></sc-if>
+</span>
+<sc-if value="{{r.showInput}}" hint-placeholder-val="{{false}}">
+<input type="text" inputMode="decimal" aria-label="{{r.inputLabel}}" value="{{r.inputVal}}" readOnly="{{yes}}" style="flex: none; width: 76px; height: 40px; box-sizing: border-box; border: 1px solid var(--border-control); border-radius: var(--radius-md); background: var(--surface); color: var(--label); font: inherit; text-align: right; padding: 0 10px;">
+</sc-if>
+<sc-if value="{{r.showStepper}}" hint-placeholder-val="{{false}}">
+<span style="flex: none; display: flex; align-items: center;">
+<button type="button" onClick="{{r.dec}}" aria-label="{{r.decLabel}}" style="width: 36px; height: 44px; border: 0; background: none; padding: 0; color: var(--link); font-size: 22px; cursor: pointer;">−</button>
+<span style="min-width: 20px; text-align: center; font-weight: 600;">{{r.shares}}</span>
+<button type="button" onClick="{{r.inc}}" aria-label="{{r.incSharesLabel}}" style="width: 36px; height: 44px; border: 0; background: none; padding: 0; color: var(--link); font-size: 22px; cursor: pointer;">+</button>
+</span>
+</sc-if>
+<sc-if value="{{r.showAmount}}" hint-placeholder-val="{{true}}">
+<span style="flex: none; font-weight: 600; color: {{r.nameColor}};">{{r.amount}}</span>
+</sc-if>
+</li>
+</sc-for>
+</ul>
+</div>
+<p role="status" style="margin: 0; padding: 0 6px; display: flex; align-items: center; gap: 4px; font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: {{statusColor}};">
+<sc-if value="{{statusBad}}" hint-placeholder-val="{{false}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 11v5.5"></path><circle cx="12" cy="7.75" r="0.6" fill="currentColor" stroke="none"></circle></svg></sc-if>
+{{status}}
+</p>
+</section>
+
+</main>
+<footer style="flex: none; padding: 12px 16px 34px; background: var(--nav-glass); -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass); border-top: 1px solid var(--separator); display: flex; flex-direction: column;">
+<x-import component-from-global-scope="Lumen.Button" variant="primary" size="large" class-name="btn-block" href="Expenses.dc.html">Add expense</x-import>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false,"section":"Theme"},"multi":{"editor":"boolean","default":false,"section":"State"},"$preview":{"width":390,"height":1380}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const total = 42.60;
+    const split = s.split || 'equal';
+    const incl = s.incl || { maya: true, sam: true, raj: true, leo: true };
+    const shares = s.shares || { maya: 1, sam: 1, raj: 2, leo: 1 };
+    const exact = { maya: 8.40, sam: 12.20, raj: 12.00, leo: 10.00 };
+    const pct = { maya: 25, sam: 25, raj: 25, leo: 25 };
+    const money = (n) => '£' + n.toFixed(2);
+    const P = [
+      { id: 'maya', name: 'Maya (you)', short: 'You', i: 'M', c: 'var(--av-maya)' },
+      { id: 'sam', name: 'Sam', short: 'Sam', i: 'S', c: 'var(--av-sam)' },
+      { id: 'raj', name: 'Raj', short: 'Raj', i: 'R', c: 'var(--av-raj)' },
+      { id: 'leo', name: 'Leo', short: 'Leo', i: 'L', c: 'var(--av-leo)' }
+    ];
+    const on = P.filter((p) => incl[p.id]);
+    const n = on.length;
+    const shareTotal = on.reduce((a, p) => a + shares[p.id], 0);
+    const amountFor = (id) => {
+      if (!incl[id]) return 0;
+      if (split === 'equal') return n ? total / n : 0;
+      if (split === 'exact') return exact[id];
+      if (split === 'percent') return total * pct[id] / 100;
+      return shareTotal ? total * shares[id] / shareTotal : 0;
+    };
+    const rows = P.map((p, i) => {
+      const inc = !!incl[p.id];
+      const amt = amountFor(p.id);
+      return {
+        i: p.i, c: p.c, name: p.name, on: inc,
+        border: i === 0 ? 'none' : '1px solid var(--separator)',
+        fade: inc ? 1 : 0.42,
+        nameColor: inc ? 'var(--label)' : 'var(--label-secondary)',
+        incLabel: 'Include ' + p.name,
+        boxBorder: inc ? '0 solid transparent' : '1.5px solid var(--border-control)',
+        boxBg: inc ? 'var(--accent)' : 'transparent',
+        flip: () => this.setState({ incl: Object.assign({}, incl, { [p.id]: !inc }) }),
+        showSub: !inc || split !== 'equal',
+        sub: !inc ? 'Not included' : money(amt),
+        showInput: inc && (split === 'exact' || split === 'percent'),
+        inputLabel: p.name + (split === 'percent' ? ' percentage' : ' amount'),
+        inputVal: split === 'percent' ? pct[p.id] + '%' : exact[p.id].toFixed(2),
+        showStepper: inc && split === 'shares',
+        shares: shares[p.id],
+        dec: () => this.setState({ shares: Object.assign({}, shares, { [p.id]: Math.max(1, shares[p.id] - 1) }) }),
+        inc: () => this.setState({ shares: Object.assign({}, shares, { [p.id]: shares[p.id] + 1 }) }),
+        decLabel: 'Fewer shares for ' + p.name,
+        incSharesLabel: 'More shares for ' + p.name,
+        showAmount: inc && split === 'equal',
+        amount: money(amt)
+      };
+    });
+    let status = '', bad = false;
+    if (n === 0) { status = 'Pick at least one person.'; bad = true; }
+    else if (split === 'equal') status = money(total) + ' split ' + (n === 4 ? 'four' : n === 3 ? 'three' : n === 2 ? 'two' : 'one') + ' ways.';
+    else if (split === 'shares') status = shareTotal + ' shares · ' + money(total / shareTotal) + ' per share.';
+    else {
+      const assigned = on.reduce((a, p) => a + (split === 'exact' ? exact[p.id] : pct[p.id]), 0);
+      const left = split === 'exact' ? Math.round((total - assigned) * 100) / 100 : 100 - assigned;
+      if (Math.abs(left) < 0.005) status = split === 'exact' ? 'Adds up to ' + money(total) + '.' : 'Adds up to 100%.';
+      else { bad = true; status = (split === 'exact' ? money(left) : left + '%') + ' still to assign.'; }
+    }
+    const paidBy = s.paidBy || (this.props.multi ? { raj: true, sam: true } : { raj: true });
+    const paidList = P.filter((p) => paidBy[p.id]);
+    const isRajSam = paidList.length === 2 && paidBy.raj && paidBy.sam;
+    const preset = { raj: 30.00, sam: 12.60 };
+    const paidAmt = (id) => isRajSam ? preset[id] : Math.round(total / paidList.length * 100) / 100;
+    const payers = P.map((p) => {
+      const sel = !!paidBy[p.id];
+      return {
+        i: p.i, c: p.c, short: p.short, on: sel,
+        aria: p.name + (sel ? ', paid' : ''),
+        ring: sel ? '0 0 0 3px var(--surface), 0 0 0 5px var(--label)' : 'none',
+        fade: sel ? 1 : 0.55,
+        weight: sel ? 600 : 400,
+        toggle: () => {
+          if (sel && paidList.length === 1) return;
+          this.setState({ paidBy: Object.assign({}, paidBy, { [p.id]: !sel }) });
+        }
+      };
+    });
+    const paidRows = paidList.map((p, i) => ({
+      id: 'paid-' + p.id, i: p.i, c: p.c, name: p.name,
+      val: paidAmt(p.id).toFixed(2),
+      border: i === 0 ? 'none' : '1px solid var(--separator)'
+    }));
+    const paidSum = Math.round(paidList.reduce((a, p) => a + paidAmt(p.id), 0) * 100) / 100;
+    const paidLeft = Math.round((total - paidSum) * 100) / 100;
+    const paidOk = Math.abs(paidLeft) < 0.005;
+    const firstName = paidList[0] ? paidList[0].name : '';
+    return {
+      themeClass: this.props.dark ? 'lm-dark' : 'lm-light',
+      yes: true,
+      payers: payers,
+      single: paidList.length === 1,
+      multi: paidList.length > 1,
+      singleText: (firstName === 'Maya (you)' ? 'You' : firstName) + ' paid the full ' + money(total) + '. More than one person paid? Tap them too.',
+      paidRows: paidRows,
+      paidOk: paidOk,
+      paidBad: !paidOk,
+      paidColor: paidOk ? 'var(--success)' : 'var(--danger)',
+      paidStatus: paidOk ? 'Adds up to ' + money(total) + '.' : money(Math.abs(paidLeft)) + (paidLeft > 0 ? ' still to account for.' : ' too much.'),
+      splitOpts: [{ label: 'Equally', value: 'equal' }, { label: 'Exact', value: 'exact' }, { label: '%', value: 'percent' }, { label: 'Shares', value: 'shares' }],
+      split: split,
+      setSplit: (v) => this.setState({ split: v }),
+      rows: rows,
+      status: status,
+      statusBad: bad,
+      statusColor: bad ? 'var(--danger)' : 'var(--label-secondary)'
+    };
+  }
+}
+</script>
+</body>
+</html>

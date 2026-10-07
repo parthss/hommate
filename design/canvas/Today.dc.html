@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Today</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="ds/lumen/components/bundle.css">
+<script src="ds/lumen/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}a:hover{color:var(--link)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--focus-ring);outline-offset:1px}
+</style>
+</helmet>
+<div class="{{themeClass}}" style="width: 390px; height: 1240px; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-alt); color: var(--label); font-family: var(--font-text); font-size: 17px; line-height: 25px; letter-spacing: -0.022em; -webkit-font-smoothing: antialiased;">
+<main style="flex: 1 1 auto; min-height: 0; overflow-y: auto; box-sizing: border-box; padding: 58px 16px 24px; display: flex; flex-direction: column; gap: 12px;">
+
+<header style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding: 0 6px 12px;">
+<div style="display: flex; flex-direction: column; gap: 2px;">
+<p style="margin: 0; font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">Monday 5 October</p>
+<h1 style="margin: 0; font-family: var(--font-display); font-size: 32px; line-height: 36px; font-weight: 600; letter-spacing: 0.004em;">Morning, Maya</h1>
+</div>
+<a href="Activity.dc.html" aria-label="Activity, 2 new" style="position: relative; flex: none; width: 44px; height: 44px; border-radius: 50%; background: var(--surface); box-shadow: var(--shadow-card); color: var(--label); display: flex; align-items: center; justify-content: center;">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"></path><path d="M10 20.5a2 2 0 0 0 4 0"></path></svg>
+<span style="position: absolute; top: 10px; right: 11px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--surface);"></span>
+</a>
+</header>
+
+<section aria-label="Your chores today" style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 10px;">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+<span style="font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">Your chores today</span>
+<span style="font-size: 14px; line-height: 20px; color: var(--label-secondary);">{{leftText}}</span>
+</div>
+<div style="display: flex; align-items: baseline; gap: 8px;">
+<span style="font-family: var(--font-display); font-size: 40px; line-height: 44px; font-weight: 600;">{{doneCount}}</span>
+<span style="font-size: 17px; line-height: 21px; color: var(--label-secondary);">of {{totalCount}} done</span>
+</div>
+<div role="progressbar" aria-label="Chores done today" aria-valuemin="0" aria-valuemax="{{totalCount}}" aria-valuenow="{{doneCount}}" style="height: 6px; border-radius: var(--radius-pill); background: var(--fill); overflow: hidden;">
+<div style="height: 100%; width: {{pct}}; border-radius: var(--radius-pill); background: var(--accent); transition: width .3s var(--ease-standard);"></div>
+</div>
+</section>
+
+<section aria-label="Overdue" style="background: {{overdueBg}}; border-radius: var(--radius-lg); padding: 14px 16px 14px 8px; display: flex; align-items: center; gap: 6px;">
+<button type="button" onClick="{{toggleOverdue}}" aria-label="{{overdueAria}}" aria-pressed="{{overdueDone}}" style="flex: none; width: 44px; height: 44px; border: 0; background: none; padding: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--bg);">
+<span style="width: 28px; height: 28px; box-sizing: border-box; border-radius: 50%; border: 1.5px solid {{overdueRing}}; background: {{overdueFill}}; display: flex; align-items: center; justify-content: center;">
+<sc-if value="{{overdueDone}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg></sc-if>
+</span>
+</button>
+<div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px;">
+<sc-if value="{{overdueOpen}}" hint-placeholder-val="{{true}}"><x-import component-from-global-scope="Lumen.Badge" tone="danger">Overdue</x-import></sc-if>
+<sc-if value="{{overdueDone}}" hint-placeholder-val="{{false}}"><x-import component-from-global-scope="Lumen.Badge" tone="success">Done just now</x-import></sc-if>
+<span style="font-weight: 600;">Take bins out</span>
+<span style="font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">{{overdueMeta}}</span>
+</div>
+<x-import component-from-global-scope="Lumen.Button" variant="tertiary" size="small" href="ChoreDetail.dc.html">Swap</x-import>
+</section>
+
+<section aria-labelledby="t-issues" style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 16px 12px 4px 16px; display: flex; flex-direction: column;">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-right: 4px;">
+<h2 id="t-issues" style="margin: 0; font-size: 17px; line-height: 21px; font-weight: 600;">House issues <span style="font-weight: 400; color: var(--label-secondary);">· 3 open</span></h2>
+<a href="Issues.dc.html" style="font-size: 14px; line-height: 20px; text-decoration: none; color: var(--link);">See all ›</a>
+</div>
+<ul style="list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column;">
+<li>
+<a href="Issues.dc.html" style="display: flex; align-items: center; gap: 12px; min-height: 64px; text-decoration: none; color: inherit;">
+<span aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--danger-tint); color: var(--danger); display: flex; align-items: center; justify-content: center;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg>
+</span>
+<span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column;">
+<span style="font-weight: 600;">Bins are overflowing</span>
+<span style="font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">Sam · <strong style="font-weight: 600; color: var(--label);">for you</strong> · 25 min ago</span>
+</span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--label-tertiary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5 16 12l-6.5 6.5"></path></svg>
+</a>
+</li>
+<li style="border-top: 1px solid var(--separator);">
+<a href="IssueDetail.dc.html" style="display: flex; align-items: center; gap: 12px; min-height: 64px; text-decoration: none; color: inherit;">
+<span aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--bg-alt); color: var(--label-secondary); display: flex; align-items: center; justify-content: center;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20c0-2 2-2.5 2-4.5S8 13 8 11M12 20c0-2 2-2.5 2-4.5S12 13 12 11M16 20c0-2 2-2.5 2-4.5S16 13 16 11"></path><path d="M6 7.5h12"></path></svg>
+</span>
+<span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column;">
+<span style="font-weight: 600;">Microwave smells of old curry</span>
+<span style="font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">Leo · everyone · Raj is on it</span>
+</span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--label-tertiary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5 16 12l-6.5 6.5"></path></svg>
+</a>
+</li>
+</ul>
+</section>
+
+<section aria-labelledby="t-due" style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 16px 12px 4px 8px; display: flex; flex-direction: column;">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 0 4px 4px 8px;">
+<h2 id="t-due" style="margin: 0; font-family: var(--font-display); font-size: 24px; line-height: 28px; font-weight: 600; letter-spacing: 0.009em;">Due today</h2>
+</div>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;">
+<sc-for list="{{today}}" as="c" hint-placeholder-count="3">
+<li style="display: flex; align-items: center; gap: 6px; min-height: 62px; border-top: {{c.border}};">
+<button type="button" onClick="{{c.toggle}}" aria-label="{{c.aria}}" aria-pressed="{{c.done}}" style="flex: none; width: 44px; height: 44px; border: 0; background: none; padding: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--bg);">
+<span style="width: 26px; height: 26px; box-sizing: border-box; border-radius: 50%; border: 1.5px solid {{c.ringBorder}}; background: {{c.ringBg}}; display: flex; align-items: center; justify-content: center;">
+<sc-if value="{{c.done}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg></sc-if>
+</span>
+</button>
+<a href="ChoreDetail.dc.html" style="flex: 1 1 auto; min-width: 0; min-height: 52px; display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit;">
+<span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column;">
+<span style="font-weight: 600; text-decoration: {{c.deco}}; color: {{c.titleColor}};">{{c.title}}</span>
+<span style="font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">{{c.status}} · {{c.repeat}}</span>
+</span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--label-tertiary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5.5 16 12l-6.5 6.5"></path></svg>
+</a>
+</li>
+</sc-for>
+</ul>
+</section>
+
+<section aria-labelledby="t-week" style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+<h2 id="t-week" style="margin: 0; font-family: var(--font-display); font-size: 24px; line-height: 28px; font-weight: 600; letter-spacing: 0.009em;">This week</h2>
+<a href="Rota.dc.html" style="font-size: 14px; line-height: 20px; text-decoration: none; color: var(--link);">Full rota ›</a>
+</div>
+<ol aria-label="Your chores per day" style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px;">
+<sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+<li aria-label="{{d.aria}}" style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+<span aria-hidden="true" style="font-size: 12px; line-height: 16px; color: var(--label-secondary);">{{d.l}}</span>
+<span aria-hidden="true" style="width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: {{d.weight}}; background: {{d.numBg}}; color: {{d.numColor}};">{{d.n}}</span>
+<span aria-hidden="true" style="display: flex; gap: 3px; height: 6px;">
+<sc-for list="{{d.dots}}" as="dot" hint-placeholder-count="1"><span style="width: 6px; height: 6px; border-radius: 50%; background: var(--av-maya);"></span></sc-for>
+</span>
+</li>
+</sc-for>
+</ol>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;">
+<sc-for list="{{week}}" as="w" hint-placeholder-count="3">
+<li style="display: flex; align-items: center; gap: 12px; min-height: 52px; border-top: 1px solid var(--separator);">
+<span style="flex: none; width: 40px; font-size: 14px; line-height: 20px; font-weight: 600; color: var(--label-secondary);">{{w.day}}</span>
+<span style="flex: 1 1 auto; min-width: 0;">{{w.title}}</span>
+<span style="font-size: 14px; line-height: 20px; color: var(--label-secondary);">{{w.short}}</span>
+</li>
+</sc-for>
+</ul>
+</section>
+
+</main>
+
+<nav aria-label="Main" style="flex: none; height: 83px; box-sizing: border-box; padding: 6px 8px 34px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--nav-glass); -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass); border-top: 1px solid var(--separator);">
+<a href="Today.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--link); font-size: 12px; line-height: 16px; font-weight: 600;">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path><circle cx="12" cy="15" r="1.5"></circle></svg>
+<span>Today</span>
+</a>
+<a href="Chores.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--label-secondary); font-size: 12px; line-height: 16px;">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 7 2 2 3.5-3.5M12 7.5h8M4 16l2 2 3.5-3.5M12 16.5h8"></path></svg>
+<span>Chores</span>
+</a>
+<a href="Expenses.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--label-secondary); font-size: 12px; line-height: 16px;">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h12v17l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5z"></path><path d="M9 8.5h6M9 12h6M9 15.5h3"></path></svg>
+<span>Expenses</span>
+</a>
+<a href="House.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--label-secondary); font-size: 12px; line-height: 16px;">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20H4z"></path><path d="M10 20v-5h4v5"></path></svg>
+<span>House</span>
+</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false,"section":"Theme"},"$preview":{"width":390,"height":1240}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const done = s.done || { dish: true };
+    const overdueDone = !!s.overdueDone;
+    const toggle = (id) => () => this.setState({ done: Object.assign({}, done, { [id]: !done[id] }) });
+    const today = [
+      { id: 'dish', title: 'Empty dishwasher', time: 'By 9:00 am', repeat: 'Daily' },
+      { id: 'hoover', title: 'Hoover living room', time: 'By 7:00 pm', repeat: 'Weekly' },
+      { id: 'plants', title: 'Water the plants', time: 'By 8:00 pm', repeat: 'Mon, Thu' }
+    ].map((c, i) => {
+      const d = !!done[c.id];
+      return Object.assign({}, c, {
+        done: d,
+        toggle: toggle(c.id),
+        aria: (d ? 'Mark ' + c.title + ' as not done' : 'Mark ' + c.title + ' as done'),
+        border: i === 0 ? 'none' : '1px solid var(--separator)',
+        ringBorder: d ? 'var(--success)' : 'var(--border-control)',
+        ringBg: d ? 'var(--success)' : 'transparent',
+        deco: d ? 'line-through' : 'none',
+        titleColor: d ? 'var(--label-secondary)' : 'var(--label)',
+        status: d ? 'Done' : c.time
+      });
+    });
+    const doneCount = today.filter((c) => c.done).length;
+    const left = today.length - doneCount + (overdueDone ? 0 : 1);
+    const days = [
+      { l: 'M', n: '5', name: 'Monday', count: 3, today: true },
+      { l: 'T', n: '6', name: 'Tuesday', count: 1 },
+      { l: 'W', n: '7', name: 'Wednesday', count: 0 },
+      { l: 'T', n: '8', name: 'Thursday', count: 1 },
+      { l: 'F', n: '9', name: 'Friday', count: 0 },
+      { l: 'S', n: '10', name: 'Saturday', count: 1 },
+      { l: 'S', n: '11', name: 'Sunday', count: 0 }
+    ].map((d) => Object.assign({}, d, {
+      aria: d.name + ' ' + d.n + ': ' + (d.count === 0 ? 'nothing for you' : d.count + (d.count === 1 ? ' chore' : ' chores')),
+      dots: Array.from({ length: d.count }, (_, k) => ({ k: k })),
+      numBg: d.today ? 'var(--accent)' : 'transparent',
+      numColor: d.today ? 'var(--on-accent)' : 'var(--label)',
+      weight: d.today ? 600 : 400
+    }));
+    return {
+      themeClass: this.props.dark ? 'lm-dark' : 'lm-light',
+      today: today,
+      doneCount: doneCount,
+      totalCount: today.length,
+      pct: Math.round(doneCount / today.length * 100) + '%',
+      leftText: left === 0 ? 'All done' : left + ' still to do',
+      overdueDone: overdueDone,
+      overdueOpen: !overdueDone,
+      toggleOverdue: () => this.setState({ overdueDone: !overdueDone }),
+      overdueAria: overdueDone ? 'Mark Take bins out as not done' : 'Mark Take bins out as done',
+      overdueBg: overdueDone ? 'var(--success-tint)' : 'var(--danger-tint)',
+      overdueRing: overdueDone ? 'var(--success)' : 'var(--danger)',
+      overdueFill: overdueDone ? 'var(--success)' : 'transparent',
+      overdueMeta: overdueDone ? 'Sam is next, on Sunday' : 'Was due Sunday, 8:00 pm',
+      days: days,
+      week: [
+        { day: 'Tue', title: 'Clean bathroom', short: 'Your turn' },
+        { day: 'Thu', title: 'Wipe down kitchen', short: '9:00 pm' },
+        { day: 'Sat', title: 'Mop kitchen floor', short: 'Anytime' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

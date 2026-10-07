@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Join with a code</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="ds/lumen/components/bundle.css">
+<script src="ds/lumen/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}a:hover{color:var(--link)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--focus-ring);outline-offset:1px}
+input:focus-visible{outline:3px solid var(--focus-ring);outline-offset:1px}
+.btn-block{width:100%;justify-content:center;box-sizing:border-box}
+</style>
+</helmet>
+<div class="{{themeClass}}" style="width: 390px; height: 844px; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-alt); color: var(--label); font-family: var(--font-text); font-size: 17px; line-height: 25px; letter-spacing: -0.022em; -webkit-font-smoothing: antialiased;">
+<main style="flex: 1 1 auto; min-height: 0; box-sizing: border-box; padding: 50px 24px 16px; display: flex; flex-direction: column; gap: 24px;">
+<a href="Welcome.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 2px; min-height: 44px; margin-left: -8px; text-decoration: none; color: var(--link);">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"></path></svg>
+Back
+</a>
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<p style="margin: 0; font-size: 14px; line-height: 20px; color: var(--label-secondary);">Step 1 of 3</p>
+<h1 style="margin: 0; font-family: var(--font-display); font-size: 32px; line-height: 36px; font-weight: 600; letter-spacing: 0.004em;">Join your house</h1>
+<p style="margin: 0; color: var(--label-secondary);">Enter the invite code a housemate shared with you.</p>
+</div>
+
+<fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px;">
+<legend style="padding: 0; margin-bottom: 8px; font-size: 14px; line-height: 20px; color: var(--label-secondary);">Invite code</legend>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px;">
+<sc-for list="{{chars}}" as="ch" hint-placeholder-count="6">
+<input type="text" maxLength="1" autoCapitalize="characters" aria-label="{{ch.label}}" value="{{ch.v}}" readOnly="{{yes}}" style="box-sizing: border-box; width: 100%; height: 56px; border-radius: var(--radius-md); border: 1px solid var(--border-control); background: var(--surface); color: var(--label); text-align: center; font-family: var(--font-display); font-size: 24px; font-weight: 600;">
+</sc-for>
+</div>
+<span style="display: flex; align-items: center; gap: 4px; font-size: 12px; line-height: 16px; color: var(--success);">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
+Code found
+</span>
+</fieldset>
+
+<section aria-label="House you are joining" style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+<div style="display: flex; flex-direction: column;">
+<span style="font-size: 14px; line-height: 20px; color: var(--label-secondary);">You’re joining</span>
+<span style="font-family: var(--font-display); font-size: 24px; line-height: 28px; font-weight: 600;">Elm Road</span>
+<span style="font-size: 14px; line-height: 20px; color: var(--label-secondary);">with Sam, Raj and Leo</span>
+</div>
+<div aria-hidden="true" style="display: flex;">
+<span style="width: 32px; height: 32px; border-radius: 50%; background: var(--av-sam); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; box-shadow: 0 0 0 2px var(--surface);">S</span>
+<span style="width: 32px; height: 32px; margin-left: -8px; border-radius: 50%; background: var(--av-raj); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; box-shadow: 0 0 0 2px var(--surface);">R</span>
+<span style="width: 32px; height: 32px; margin-left: -8px; border-radius: 50%; background: var(--av-leo); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; box-shadow: 0 0 0 2px var(--surface);">L</span>
+</div>
+</section>
+<p style="margin: 0; font-size: 14px; line-height: 20px; color: var(--label-secondary);">No code? Ask a housemate to open House › Invite code.</p>
+</main>
+<footer style="flex: none; padding: 12px 24px 40px; display: flex; flex-direction: column;">
+<x-import component-from-global-scope="Lumen.Button" variant="primary" size="large" class-name="btn-block" href="Profile.dc.html">Join Elm Road</x-import>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false,"section":"Theme"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const code = 'ELM482'.split('');
+    return {
+      themeClass: this.props.dark ? 'lm-dark' : 'lm-light',
+      yes: true,
+      chars: code.map((v, i) => ({ v: v, label: 'Character ' + (i + 1) + ' of 6' }))
+    };
+  }
+}
+</script>
+</body>
+</html>

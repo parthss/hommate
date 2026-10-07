@@ -1,0 +1,7 @@
+# Your house's database (password hashes, push keys) — never commit it
+data/
+node_modules/
+*.log
+.DS_Store
+# Notes for AI assistants, kept local
+CLAUDE.md

@@ -1,0 +1,423 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Activity.dc.html": {
+      "h": 1020,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "10 · Activity",
+      "w": 390,
+      "x": 0,
+      "y": 5000
+    },
+    "ActivityHistory.dc.html": {
+      "h": 1820,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "11b · Activity history",
+      "w": 390,
+      "x": 940,
+      "y": 5000
+    },
+    "AddChore.dc.html": {
+      "h": 1400,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "5 · Add / edit chore",
+      "w": 390,
+      "x": 2820,
+      "y": 1380
+    },
+    "AddExpense.dc.html": {
+      "h": 1380,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "8 · Add expense — one payer",
+      "w": 390,
+      "x": 1880,
+      "y": 3200
+    },
+    "AddExpenseMulti.dc.html": {
+      "h": 1380,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "8 · Add expense — two payers",
+      "w": 390,
+      "x": 2350,
+      "y": 3200
+    },
+    "AgendaDark.dc.html": {
+      "h": 990,
+      "is_interactive": true,
+      "page": "directions",
+      "radius": 40,
+      "title": "C · Agenda — dark",
+      "w": 390,
+      "x": 940,
+      "y": 1180
+    },
+    "ChoreDetail.dc.html": {
+      "h": 1140,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "6 · Chore detail",
+      "w": 390,
+      "x": 3290,
+      "y": 1380
+    },
+    "Chores.dc.html": {
+      "h": 1000,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "3 · Chores",
+      "w": 390,
+      "x": 940,
+      "y": 1380
+    },
+    "ChoresDark.dc.html": {
+      "h": 1000,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "3 · Chores — dark",
+      "w": 390,
+      "x": 1410,
+      "y": 1380
+    },
+    "ChoresEmpty.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "3 · Chores — empty",
+      "w": 390,
+      "x": 1880,
+      "y": 1380
+    },
+    "CreateHouse.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "1b · Create a house",
+      "w": 390,
+      "x": 470,
+      "y": 0
+    },
+    "ExpenseDetail.dc.html": {
+      "h": 1180,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "7b · Expense detail",
+      "w": 390,
+      "x": 1410,
+      "y": 3200
+    },
+    "Expenses.dc.html": {
+      "h": 1000,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "7 · Expenses",
+      "w": 390,
+      "x": 0,
+      "y": 3200
+    },
+    "ExpensesDark.dc.html": {
+      "h": 1000,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "7 · Expenses — dark",
+      "w": 390,
+      "x": 470,
+      "y": 3200
+    },
+    "ExpensesSettled.dc.html": {
+      "h": 1000,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "7 · Expenses — all settled",
+      "w": 390,
+      "x": 940,
+      "y": 3200
+    },
+    "House.dc.html": {
+      "h": 1760,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "11 · House settings",
+      "w": 390,
+      "x": 470,
+      "y": 5000
+    },
+    "Install.dc.html": {
+      "h": 960,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "1e · Home Screen and notifications",
+      "w": 390,
+      "x": 1880,
+      "y": 0
+    },
+    "JoinHouse.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "1c · Join with a code",
+      "w": 390,
+      "x": 940,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 1050,
+      "is_interactive": true,
+      "page": "directions",
+      "radius": 40,
+      "title": "A · Spotlight — light",
+      "w": 390,
+      "x": 0,
+      "y": 0
+    },
+    "Profile.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "1d · Name and colour",
+      "w": 390,
+      "x": 1410,
+      "y": 0
+    },
+    "Rota.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "4 · Weekly rota",
+      "w": 390,
+      "x": 2350,
+      "y": 1380
+    },
+    "SettleUp.dc.html": {
+      "h": 900,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "9 · Settle up",
+      "w": 390,
+      "x": 2820,
+      "y": 3200
+    },
+    "SpotlightDark.dc.html": {
+      "h": 1050,
+      "is_interactive": true,
+      "page": "directions",
+      "radius": 40,
+      "title": "A · Spotlight — dark",
+      "w": 390,
+      "x": 0,
+      "y": 1180
+    },
+    "TilesDark.dc.html": {
+      "h": 1060,
+      "is_interactive": true,
+      "page": "directions",
+      "radius": 40,
+      "title": "B · Tiles — dark (chosen)",
+      "w": 390,
+      "x": 470,
+      "y": 1180
+    },
+    "Today.dc.html": {
+      "h": 1240,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "2 · Today",
+      "w": 390,
+      "x": 0,
+      "y": 1380
+    },
+    "TodayAgenda.dc.html": {
+      "h": 990,
+      "is_interactive": true,
+      "page": "directions",
+      "radius": 40,
+      "title": "C · Agenda — light",
+      "w": 390,
+      "x": 940,
+      "y": 0
+    },
+    "TodayDark.dc.html": {
+      "h": 1240,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "2 · Today — dark",
+      "w": 390,
+      "x": 470,
+      "y": 1380
+    },
+    "TodayTiles.dc.html": {
+      "h": 1060,
+      "is_interactive": true,
+      "page": "directions",
+      "radius": 40,
+      "title": "B · Tiles — light (chosen)",
+      "w": 390,
+      "x": 470,
+      "y": 0
+    },
+    "Welcome.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "1 · Welcome",
+      "w": 390,
+      "x": 0,
+      "y": 0
+    },
+    "Issues.dc.html": {
+      "h": 1100,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "12 · House issues",
+      "w": 390,
+      "x": 0,
+      "y": 7240
+    },
+    "IssueDetail.dc.html": {
+      "h": 1320,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "12b · Issue detail",
+      "w": 390,
+      "x": 470,
+      "y": 7240
+    },
+    "ReportIssue.dc.html": {
+      "h": 1440,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "12c · Report an issue — mess or smell",
+      "w": 390,
+      "x": 940,
+      "y": 7240
+    },
+    "ReportIssueChore.dc.html": {
+      "h": 1440,
+      "is_interactive": true,
+      "radius": 40,
+      "title": "12c · Report an issue — not done properly",
+      "w": 390,
+      "x": 1410,
+      "y": 7240
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-10-05T12:32:08Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/code/artifact/7077994e-e9ce-45f4-8f65-54f5fd5f4e0b",
+      "copiedAt": "2026-10-05T12:32:08Z",
+      "namespace": "lumen",
+      "title": "Lumen",
+      "version": "1791203194-255a"
+    }
+  ],
+  "launch": {
+    "page": "screens",
+    "view": "canvas"
+  },
+  "notes": {
+    "dirTitle": {
+      "kind": "title1",
+      "maxW": 1330,
+      "page": "directions",
+      "text": "Today screen — three directions",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "rowChores": {
+      "kind": "title1",
+      "maxW": 3680,
+      "text": "Chores",
+      "w": 240,
+      "x": 0,
+      "y": 1080
+    },
+    "rowHouse": {
+      "kind": "title1",
+      "maxW": 1330,
+      "text": "Activity and house",
+      "w": 240,
+      "x": 0,
+      "y": 4700
+    },
+    "rowMoney": {
+      "kind": "title1",
+      "maxW": 3210,
+      "text": "Money",
+      "w": 240,
+      "x": 0,
+      "y": 2900
+    },
+    "rowOnboarding": {
+      "kind": "title1",
+      "maxW": 2270,
+      "text": "Getting started",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "rowIssues": {
+      "kind": "title1",
+      "maxW": 1800,
+      "text": "House issues",
+      "w": 240,
+      "x": 0,
+      "y": 6940
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "TodayTiles.dc.html",
+    "TodayAgenda.dc.html",
+    "SpotlightDark.dc.html",
+    "TilesDark.dc.html",
+    "AgendaDark.dc.html",
+    "Welcome.dc.html",
+    "CreateHouse.dc.html",
+    "JoinHouse.dc.html",
+    "Profile.dc.html",
+    "Install.dc.html",
+    "Today.dc.html",
+    "TodayDark.dc.html",
+    "Chores.dc.html",
+    "ChoresDark.dc.html",
+    "ChoresEmpty.dc.html",
+    "Rota.dc.html",
+    "AddChore.dc.html",
+    "ChoreDetail.dc.html",
+    "Expenses.dc.html",
+    "ExpensesDark.dc.html",
+    "ExpensesSettled.dc.html",
+    "ExpenseDetail.dc.html",
+    "AddExpense.dc.html",
+    "AddExpenseMulti.dc.html",
+    "SettleUp.dc.html",
+    "Activity.dc.html",
+    "House.dc.html",
+    "ActivityHistory.dc.html",
+    "Issues.dc.html",
+    "IssueDetail.dc.html",
+    "ReportIssue.dc.html",
+    "ReportIssueChore.dc.html"
+  ],
+  "pages": [
+    {
+      "id": "screens",
+      "name": "Screens"
+    },
+    {
+      "id": "directions",
+      "name": "Directions"
+    }
+  ],
+  "title": "Hommate"
+}

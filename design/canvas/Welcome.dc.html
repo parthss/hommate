@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Welcome</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="ds/lumen/components/bundle.css">
+<script src="ds/lumen/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}a:hover{color:var(--link)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--focus-ring);outline-offset:1px}
+.btn-block{width:100%;justify-content:center;box-sizing:border-box}
+</style>
+</helmet>
+<div class="{{themeClass}}" style="width: 390px; height: 844px; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-alt); color: var(--label); font-family: var(--font-text); font-size: 17px; line-height: 25px; letter-spacing: -0.022em; -webkit-font-smoothing: antialiased;">
+<main style="flex: 1 1 auto; min-height: 0; box-sizing: border-box; padding: 64px 24px 16px; display: flex; flex-direction: column; gap: 32px;">
+<p style="margin: 0; font-family: var(--font-display); font-size: 17px; line-height: 21px; font-weight: 600; letter-spacing: -0.01em;">Hommate</p>
+
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<h1 style="margin: 0; font-family: var(--font-display); font-size: 40px; line-height: 44px; font-weight: 600;">Your house, sorted.</h1>
+<p style="margin: 0; font-family: var(--font-display); font-size: 21px; line-height: 25px; letter-spacing: 0.011em; color: var(--label-secondary);">Who’s doing what, when it’s due, and who owes whom. No group chat needed.</p>
+</div>
+
+<div aria-hidden="true" style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px;">
+<div style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 14px 16px; display: flex; align-items: center; gap: 12px;">
+<span style="width: 32px; height: 32px; border-radius: 50%; background: var(--av-sam); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600;">S</span>
+<span style="flex: 1 1 auto; display: flex; flex-direction: column;"><span style="font-weight: 600;">Take bins out</span><span style="font-size: 14px; line-height: 20px; color: var(--label-secondary);">Sam · Sunday, 8:00 pm</span></span>
+<span style="width: 26px; height: 26px; border-radius: 50%; background: var(--success); color: var(--bg); display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg></span>
+</div>
+<div style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 14px 16px; display: flex; align-items: center; gap: 12px; margin-left: 20px;">
+<span style="width: 32px; height: 32px; border-radius: 50%; background: var(--av-leo); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600;">L</span>
+<span style="flex: 1 1 auto; display: flex; flex-direction: column;"><span style="font-weight: 600;">Clean bathroom</span><span style="font-size: 14px; line-height: 20px; color: var(--label-secondary);">Leo is next · Tuesday</span></span>
+</div>
+<div style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 14px 16px; display: flex; align-items: center; gap: 12px;">
+<span style="width: 32px; height: 32px; border-radius: 50%; background: var(--av-raj); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600;">R</span>
+<span style="flex: 1 1 auto; display: flex; flex-direction: column;"><span style="font-weight: 600;">Tesco shop</span><span style="font-size: 14px; line-height: 20px; color: var(--label-secondary);">Raj paid · split 4 ways</span></span>
+<span style="font-weight: 600;">£42.60</span>
+</div>
+</div>
+</main>
+<footer style="flex: none; padding: 12px 24px 40px; display: flex; flex-direction: column; gap: 12px;">
+<x-import component-from-global-scope="Lumen.Button" variant="primary" size="large" class-name="btn-block" href="CreateHouse.dc.html">Create a house</x-import>
+<x-import component-from-global-scope="Lumen.Button" variant="secondary" size="large" class-name="btn-block" href="JoinHouse.dc.html">Join with a code</x-import>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false,"section":"Theme"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { themeClass: this.props.dark ? 'lm-dark' : 'lm-light' };
+  }
+}
+</script>
+</body>
+</html>

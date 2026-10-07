@@ -1,0 +1,19 @@
+{
+  "name": "hommate",
+  "version": "0.1.0",
+  "description": "A shared-house app for chores, reminders and expenses. Self-hosted PWA.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server/server.js",
+    "dev": "node --disable-warning=ExperimentalWarning --watch server/server.js",
+    "seed": "node --disable-warning=ExperimentalWarning server/seed.js",
+    "test": "node --disable-warning=ExperimentalWarning --test server/test/*.test.js",
+    "backup": "node --disable-warning=ExperimentalWarning server/backup.js",
+    "demo": "HOMMATE_DB=data/demo.db node --disable-warning=ExperimentalWarning server/seed.js && HOMMATE_DB=data/demo.db PORT=8081 node --disable-warning=ExperimentalWarning server/server.js"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,4 @@
+#!/data/data/com.termux/files/usr/bin/sh
+# Copy this file to ~/.termux/boot/ (needs the Termux:Boot app) so Hommate starts when the tablet turns on.
+termux-wake-lock
+nohup "$HOME/Hommate/scripts/start.sh" > /dev/null 2>&1 &

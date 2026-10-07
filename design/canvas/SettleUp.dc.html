@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Settle up</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="ds/lumen/components/bundle.css">
+<script src="ds/lumen/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}a:hover{color:var(--link)}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--focus-ring);outline-offset:1px}
+.btn-block{width:100%;justify-content:center;box-sizing:border-box}
+</style>
+</helmet>
+<div class="{{themeClass}}" style="width: 390px; height: 900px; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-alt); color: var(--label); font-family: var(--font-text); font-size: 17px; line-height: 25px; letter-spacing: -0.022em; -webkit-font-smoothing: antialiased;">
+<main style="flex: 1 1 auto; min-height: 0; overflow-y: auto; box-sizing: border-box; padding: 50px 16px 24px; display: flex; flex-direction: column; gap: 16px;">
+
+<a href="Expenses.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--link);">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"></path></svg>
+Expenses
+</a>
+<h1 style="margin: 0; padding: 0 6px; font-family: var(--font-display); font-size: 32px; line-height: 36px; font-weight: 600; letter-spacing: 0.004em;">Settle up</h1>
+
+<sc-if value="{{editing}}" hint-placeholder-val="{{true}}">
+<section aria-labelledby="su-who" style="display: flex; flex-direction: column; gap: 8px;">
+<h2 id="su-who" style="margin: 0; padding: 0 6px; font-size: 14px; line-height: 20px; font-weight: 400; color: var(--label-secondary);">Who are you paying?</h2>
+<div role="group" aria-labelledby="su-who" style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 14px 12px 10px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
+<sc-for list="{{people}}" as="p" hint-placeholder-count="3">
+<button type="button" onClick="{{p.pick}}" aria-pressed="{{p.on}}" style="display: flex; flex-direction: column; align-items: center; gap: 4px; border: 0; background: none; padding: 4px 0; cursor: pointer; color: var(--label); font: inherit; font-size: 14px; line-height: 20px;">
+<span aria-hidden="true" style="width: 48px; height: 48px; border-radius: 50%; background: {{p.c}}; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 600; box-shadow: {{p.ring}};">{{p.i}}</span>
+<span style="font-weight: {{p.weight}};">{{p.name}}</span>
+<span style="font-size: 12px; line-height: 16px; color: var(--label-secondary);">you owe {{p.owed}}</span>
+</button>
+</sc-for>
+</div>
+</section>
+
+<section aria-label="Amount" style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 18px 20px; display: flex; flex-direction: column; align-items: center; gap: 2px;">
+<label for="su-amount" style="font-size: 14px; line-height: 20px; color: var(--label-secondary);">You’re paying {{name}}</label>
+<div style="display: flex; align-items: baseline; justify-content: center; gap: 2px;">
+<span aria-hidden="true" style="font-family: var(--font-display); font-size: 32px; line-height: 52px; font-weight: 600; color: var(--label-secondary);">£</span>
+<input id="su-amount" type="text" inputMode="decimal" value="{{amountVal}}" readOnly="{{yes}}" style="width: 130px; border: 0; background: transparent; color: var(--label); font-family: var(--font-display); font-size: 48px; line-height: 52px; font-weight: 600; padding: 0;">
+</div>
+<span style="font-size: 12px; line-height: 16px; color: var(--label-secondary);">The full amount. You can pay part of it.</span>
+</section>
+
+<section aria-labelledby="su-how" style="display: flex; flex-direction: column; gap: 8px;">
+<h2 id="su-how" style="margin: 0; padding: 0 6px; font-size: 14px; line-height: 20px; font-weight: 400; color: var(--label-secondary);">How did you pay?</h2>
+<div role="group" aria-labelledby="su-how" style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 0 16px; display: flex; flex-direction: column;">
+<sc-for list="{{methods}}" as="m" hint-placeholder-count="3">
+<button type="button" onClick="{{m.pick}}" aria-pressed="{{m.on}}" style="display: flex; align-items: center; gap: 12px; min-height: 52px; border: 0; border-top: {{m.border}}; background: none; padding: 0; color: var(--label); font: inherit; cursor: pointer; text-align: left;">
+<span style="flex: 1 1 auto;">{{m.label}}</span>
+<span aria-hidden="true" style="width: 24px; height: 24px; border-radius: 50%; box-sizing: border-box; border: {{m.ring}}; background: {{m.fill}}; color: var(--on-accent); display: flex; align-items: center; justify-content: center;">
+<sc-if value="{{m.on}}" hint-placeholder-val="{{false}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg></sc-if>
+</span>
+</button>
+</sc-for>
+</div>
+<p style="margin: 0; padding: 0 6px; font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">Hommate doesn’t move money. Pay {{name}} your usual way, then record it here so everyone’s balances update.</p>
+</section>
+</sc-if>
+
+<sc-if value="{{recorded}}" hint-placeholder-val="{{false}}">
+<section role="status" style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 32px 24px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px;">
+<span aria-hidden="true" style="width: 56px; height: 56px; border-radius: 50%; background: var(--success-tint); color: var(--success); display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">
+<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg>
+</span>
+<h2 style="margin: 0; font-family: var(--font-display); font-size: 28px; line-height: 32px; font-weight: 600; letter-spacing: 0.007em;">Payment recorded.</h2>
+<p style="margin: 0; color: var(--label-secondary);">You and {{name}} are square. {{name}} will see it in Activity.</p>
+<div style="display: flex; gap: 12px; margin-top: 16px;">
+<x-import component-from-global-scope="Lumen.Button" variant="tertiary" on-click="{{undo}}">Undo</x-import>
+<x-import component-from-global-scope="Lumen.Button" variant="secondary" href="Expenses.dc.html">Back to expenses</x-import>
+</div>
+</section>
+</sc-if>
+
+</main>
+<sc-if value="{{editing}}" hint-placeholder-val="{{true}}">
+<footer style="flex: none; padding: 12px 16px 34px; background: var(--nav-glass); -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass); border-top: 1px solid var(--separator); display: flex; flex-direction: column;">
+<x-import component-from-global-scope="Lumen.Button" variant="primary" size="large" class-name="btn-block" on-click="{{record}}">{{cta}}</x-import>
+</footer>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false,"section":"Theme"},"$preview":{"width":390,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const who = s.who || 'leo';
+    const method = s.method || 'bank';
+    const recorded = !!s.recorded;
+    const P = [
+      { id: 'leo', name: 'Leo', i: 'L', c: 'var(--av-leo)', owed: 9.60 },
+      { id: 'sam', name: 'Sam', i: 'S', c: 'var(--av-sam)', owed: 7.80 },
+      { id: 'raj', name: 'Raj', i: 'R', c: 'var(--av-raj)', owed: 5.20 }
+    ];
+    const cur = P.filter((p) => p.id === who)[0];
+    const methodDefs = [{ id: 'bank', label: 'Bank transfer' }, { id: 'cash', label: 'Cash' }, { id: 'other', label: 'Other' }];
+    return {
+      themeClass: this.props.dark ? 'lm-dark' : 'lm-light',
+      yes: true,
+      editing: !recorded,
+      recorded: recorded,
+      name: cur.name,
+      amountVal: cur.owed.toFixed(2),
+      cta: 'Record £' + cur.owed.toFixed(2) + ' to ' + cur.name,
+      record: () => this.setState({ recorded: true }),
+      undo: () => this.setState({ recorded: false }),
+      people: P.map((p) => ({
+        name: p.name, i: p.i, c: p.c, owed: '£' + p.owed.toFixed(2), on: p.id === who,
+        ring: p.id === who ? '0 0 0 3px var(--surface), 0 0 0 5px var(--label)' : 'none',
+        weight: p.id === who ? 600 : 400,
+        pick: () => this.setState({ who: p.id })
+      })),
+      methods: methodDefs.map((m, i) => ({
+        label: m.label, on: m.id === method,
+        border: i === 0 ? 'none' : '1px solid var(--separator)',
+        ring: m.id === method ? '0 solid transparent' : '1.5px solid var(--border-control)',
+        fill: m.id === method ? 'var(--accent)' : 'transparent',
+        pick: () => this.setState({ method: m.id })
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Activity history</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="ds/lumen/components/bundle.css">
+<script src="ds/lumen/components/bundle.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:var(--link)}a:hover{color:var(--link)}
+button:focus-visible,a:focus-visible{outline:3px solid var(--focus-ring);outline-offset:1px}
+.seg-full{display:grid;width:100%}
+</style>
+</helmet>
+<div class="{{themeClass}}" style="width: 390px; height: 1820px; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-alt); color: var(--label); font-family: var(--font-text); font-size: 17px; line-height: 25px; letter-spacing: -0.022em; -webkit-font-smoothing: antialiased;">
+<main style="flex: 1 1 auto; min-height: 0; overflow-y: auto; box-sizing: border-box; padding: 50px 16px 24px; display: flex; flex-direction: column; gap: 12px;">
+
+<a href="House.dc.html" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--link);">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"></path></svg>
+House
+</a>
+<header style="display: flex; flex-direction: column; gap: 2px; padding: 0 6px 4px;">
+<h1 style="margin: 0; font-family: var(--font-display); font-size: 32px; line-height: 36px; font-weight: 600; letter-spacing: 0.004em;">Activity history</h1>
+<p style="margin: 0; font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">Everything anyone at Elm Road has done in Hommate.</p>
+</header>
+
+<x-import component-from-global-scope="Lumen.SegmentedControl" variant="inset" label="Type of activity" options="{{kinds}}" value="{{kind}}" on-change="{{setKind}}" class-name="seg-full"></x-import>
+
+<div role="group" aria-label="Who" style="display: flex; gap: 8px; overflow-x: auto; padding: 2px 0;">
+<sc-for list="{{people}}" as="p" hint-placeholder-count="5">
+<button type="button" onClick="{{p.pick}}" aria-pressed="{{p.on}}" style="flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px 0 {{p.padLeft}}; border-radius: var(--radius-pill); border: 1px solid {{p.border}}; background: {{p.bg}}; color: var(--label); font: inherit; font-size: 14px; font-weight: {{p.weight}}; cursor: pointer;">
+<sc-if value="{{p.hasAvatar}}" hint-placeholder-val="{{true}}"><span aria-hidden="true" style="width: 26px; height: 26px; border-radius: 50%; background: {{p.c}}; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">{{p.i}}</span></sc-if>
+{{p.label}}
+</button>
+</sc-for>
+</div>
+
+<sc-if value="{{empty}}" hint-placeholder-val="{{false}}">
+<section style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 32px 24px; text-align: center; display: flex; flex-direction: column; gap: 4px;">
+<span style="font-weight: 600;">Nothing to show.</span>
+<span style="font-size: 14px; line-height: 20px; color: var(--label-secondary);">Try another type or person.</span>
+</section>
+</sc-if>
+
+<sc-for list="{{days}}" as="d" hint-placeholder-count="4">
+<section aria-label="{{d.label}}" style="background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 14px 16px 2px; display: flex; flex-direction: column;">
+<h2 style="margin: 0 0 2px; font-size: 14px; line-height: 20px; font-weight: 400; color: var(--label-secondary);">{{d.label}}</h2>
+<ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;">
+<sc-for list="{{d.items}}" as="a" hint-placeholder-count="3">
+<li style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-top: {{a.border}};">
+<span aria-hidden="true" style="position: relative; flex: none; width: 36px; height: 36px; border-radius: 50%; background: {{a.c}}; color: {{a.fg}}; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600;">
+{{a.i}}
+<sc-if value="{{a.isSystem}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V20H4z"></path><path d="M10 20v-5h4v5"></path></svg></sc-if>
+<span style="position: absolute; right: -4px; bottom: -4px; width: 18px; height: 18px; border-radius: 50%; background: {{a.badgeBg}}; color: {{a.badgeFg}}; box-shadow: 0 0 0 2px var(--surface); display: flex; align-items: center; justify-content: center;">
+<sc-if value="{{a.iconDone}}" hint-placeholder-val="{{true}}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"></path></svg></sc-if>
+<sc-if value="{{a.iconMoney}}" hint-placeholder-val="{{false}}"><span style="font-size: 11px; line-height: 11px; font-weight: 700;">£</span></sc-if>
+<sc-if value="{{a.iconSwap}}" hint-placeholder-val="{{false}}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"></path></svg></sc-if>
+<sc-if value="{{a.iconEdit}}" hint-placeholder-val="{{false}}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 19.5h4l10-10-4-4-10 10z"></path></svg></sc-if>
+<sc-if value="{{a.iconAlert}}" hint-placeholder-val="{{false}}"><span style="font-size: 11px; line-height: 11px; font-weight: 700;">!</span></sc-if>
+<sc-if value="{{a.iconIssue}}" hint-placeholder-val="{{false}}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 21V4.5M5.5 4.5h11l-2 4 2 4h-11"></path></svg></sc-if>
+</span>
+</span>
+<span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px;">
+<span style="font-size: 15px; line-height: 21px;"><strong style="font-weight: 600;">{{a.who}}</strong> {{a.what}}</span>
+<span style="font-size: 14px; line-height: 20px; letter-spacing: -0.016em; color: var(--label-secondary);">{{a.detail}}</span>
+</span>
+<span style="flex: none; font-size: 12px; line-height: 21px; color: var(--label-secondary);">{{a.time}}</span>
+</li>
+</sc-for>
+</ol>
+</section>
+</sc-for>
+
+<sc-if value="{{notEmpty}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; justify-content: center; padding-top: 4px;">
+<x-import component-from-global-scope="Lumen.Button" variant="tertiary">Show older</x-import>
+</div>
+</sc-if>
+
+</main>
+
+<nav aria-label="Main" style="flex: none; height: 83px; box-sizing: border-box; padding: 6px 8px 34px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--nav-glass); -webkit-backdrop-filter: var(--blur-glass); backdrop-filter: var(--blur-glass); border-top: 1px solid var(--separator);">
+<a href="Today.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--label-secondary); font-size: 12px; line-height: 16px;">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path><circle cx="12" cy="15" r="1.5"></circle></svg>
+<span>Today</span>
+</a>
+<a href="Chores.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--label-secondary); font-size: 12px; line-height: 16px;">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 7 2 2 3.5-3.5M12 7.5h8M4 16l2 2 3.5-3.5M12 16.5h8"></path></svg>
+<span>Chores</span>
+</a>
+<a href="Expenses.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--label-secondary); font-size: 12px; line-height: 16px;">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h12v17l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5z"></path><path d="M9 8.5h6M9 12h6M9 15.5h3"></path></svg>
+<span>Expenses</span>
+</a>
+<a href="House.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; text-decoration: none; color: var(--link); font-size: 12px; line-height: 16px; font-weight: 600;">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20H4z"></path><path d="M10 20v-5h4v5"></path></svg>
+<span>House</span>
+</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false,"section":"Theme"},"$preview":{"width":390,"height":1820}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const kind = s.kind || 'all';
+    const person = s.person || 'all';
+    const P = {
+      maya: { who: 'You', i: 'M', c: 'var(--av-maya)', fg: '#ffffff' },
+      sam: { who: 'Sam', i: 'S', c: 'var(--av-sam)', fg: '#ffffff' },
+      raj: { who: 'Raj', i: 'R', c: 'var(--av-raj)', fg: '#ffffff' },
+      leo: { who: 'Leo', i: 'L', c: 'var(--av-leo)', fg: '#ffffff' },
+      sys: { who: 'Hommate', i: '', c: 'var(--fill)', fg: 'var(--label)' }
+    };
+    // cat: chores | money | swaps ; icon: done | money | swap | edit | alert
+    const log = [
+      { day: 'Today · Mon 5 Oct', p: 'sam', cat: 'issues', icon: 'issue', what: 'reported an issue: Bins are overflowing', detail: 'Needs doing now · tagged you', time: '9:05 am' },
+      { day: 'Today · Mon 5 Oct', p: 'maya', cat: 'chores', icon: 'done', what: 'marked Empty dishwasher done', detail: 'On time', time: '8:52 am' },
+      { day: 'Today · Mon 5 Oct', p: 'leo', cat: 'swaps', icon: 'swap', what: 'asked you to swap Hoover stairs', detail: 'Sat 10 Oct · waiting for you', time: '8:30 am' },
+      { day: 'Today · Mon 5 Oct', p: 'maya', cat: 'swaps', icon: 'swap', what: 'asked Leo to swap Clean bathroom', detail: 'Tue 6 Oct · waiting for Leo', time: '8:20 am' },
+      { day: 'Today · Mon 5 Oct', p: 'sys', cat: 'chores', icon: 'alert', what: 'marked Take bins out as overdue', detail: 'Maya’s turn · was due Sun 8:00 pm', time: '12:00 am' },
+      { day: 'Yesterday · Sun 4 Oct', p: 'raj', cat: 'issues', icon: 'issue', what: 'is on it: Microwave smells of old curry', detail: 'Mess or smell · reported by Leo', time: '9:41 pm' },
+      { day: 'Yesterday · Sun 4 Oct', p: 'leo', cat: 'issues', icon: 'issue', what: 'reported an issue: Microwave smells of old curry', detail: 'Mess or smell · for everyone', time: '9:10 pm' },
+      { day: 'Yesterday · Sun 4 Oct', p: 'raj', cat: 'issues', icon: 'issue', what: 'reported an issue: Crumbs left all over the stairs', detail: 'Not done properly · tagged Leo', time: '7:30 pm' },
+      { day: 'Yesterday · Sun 4 Oct', p: 'raj', cat: 'money', icon: 'edit', what: 'edited Tesco shop', detail: 'Amount £40.10 → £42.60', time: '6:20 pm' },
+      { day: 'Yesterday · Sun 4 Oct', p: 'raj', cat: 'money', icon: 'money', what: 'added Tesco shop', detail: '£42.60 · split equally between 4', time: '6:15 pm' },
+      { day: 'Sat 3 Oct', p: 'sam', cat: 'money', icon: 'money', what: 'added Pizza night', detail: '£36.00 · split between Maya, Sam and Raj', time: '9:40 pm' },
+      { day: 'Sat 3 Oct', p: 'leo', cat: 'chores', icon: 'done', what: 'marked Hoover stairs done', detail: 'On time', time: '2:10 pm' },
+      { day: 'Sat 3 Oct', p: 'maya', cat: 'chores', icon: 'done', what: 'claimed Mop kitchen floor', detail: 'One-off · due Sat 10 Oct', time: '11:05 am' },
+      { day: 'Fri 2 Oct', p: 'raj', cat: 'issues', icon: 'done', what: 'resolved an issue: Sticky fridge shelf', detail: 'Reported by Sam', time: '8:15 pm' },
+      { day: 'Fri 2 Oct', p: 'sam', cat: 'swaps', icon: 'swap', what: 'accepted Raj’s swap for Put recycling out', detail: 'Sam takes Wed 7 Oct, Raj takes Wed 14 Oct', time: '7:30 pm' },
+      { day: 'Fri 2 Oct', p: 'sam', cat: 'money', icon: 'money', what: 'added Toilet roll and bin bags', detail: '£9.20 · split equally between 4', time: '5:02 pm' },
+      { day: 'Thu 1 Oct', p: 'sys', cat: 'money', icon: 'money', what: 'added the Broadband bill', detail: '£35.00 · paid by Leo · monthly', time: '9:00 am' },
+      { day: 'Thu 1 Oct', p: 'maya', cat: 'money', icon: 'money', what: 'added Cleaning supplies', detail: '£14.80 · split equally between 4', time: '7:45 pm' },
+      { day: 'Thu 1 Oct', p: 'maya', cat: 'chores', icon: 'edit', what: 'edited Water the plants', detail: 'Now Mon and Thu by 8:00 pm', time: '7:40 pm' },
+      { day: 'Mon 28 Sep', p: 'leo', cat: 'money', icon: 'money', what: 'paid you back', detail: '£6.00 · Cash', time: '10:12 pm' }
+    ];
+    const keep = (e) => (kind === 'all' || e.cat === kind) && (person === 'all' || e.p === person);
+    const order = [];
+    const byDay = {};
+    log.filter(keep).forEach((e) => {
+      if (!byDay[e.day]) { byDay[e.day] = []; order.push(e.day); }
+      byDay[e.day].push(e);
+    });
+    const days = order.map((d) => ({
+      label: d,
+      items: byDay[d].map((e, i) => Object.assign({}, P[e.p], e, {
+        border: i === 0 ? 'none' : '1px solid var(--separator)',
+        isSystem: e.p === 'sys',
+        iconDone: e.icon === 'done',
+        iconMoney: e.icon === 'money',
+        iconSwap: e.icon === 'swap',
+        iconEdit: e.icon === 'edit',
+        iconAlert: e.icon === 'alert',
+        iconIssue: e.icon === 'issue',
+        badgeBg: e.icon === 'done' ? 'var(--success)' : e.icon === 'alert' ? 'var(--danger)' : 'var(--fill)',
+        badgeFg: (e.icon === 'done' || e.icon === 'alert') ? 'var(--bg)' : 'var(--label)'
+      }))
+    }));
+    const peopleDefs = [
+      { id: 'all', label: 'Everyone' },
+      { id: 'maya', label: 'You', i: 'M', c: 'var(--av-maya)' },
+      { id: 'sam', label: 'Sam', i: 'S', c: 'var(--av-sam)' },
+      { id: 'raj', label: 'Raj', i: 'R', c: 'var(--av-raj)' },
+      { id: 'leo', label: 'Leo', i: 'L', c: 'var(--av-leo)' }
+    ];
+    return {
+      themeClass: this.props.dark ? 'lm-dark' : 'lm-light',
+      kinds: [{ label: 'All', value: 'all' }, { label: 'Chores', value: 'chores' }, { label: 'Money', value: 'money' }, { label: 'Swaps', value: 'swaps' }, { label: 'Issues', value: 'issues' }],
+      kind: kind,
+      setKind: (v) => this.setState({ kind: v }),
+      people: peopleDefs.map((p) => {
+        const on = p.id === person;
+        return Object.assign({ i: '', c: 'transparent' }, p, {
+          on: on,
+          hasAvatar: p.id !== 'all',
+          padLeft: p.id === 'all' ? '14px' : '6px',
+          bg: on ? 'var(--surface)' : 'transparent',
+          border: on ? 'var(--label)' : 'var(--separator)',
+          weight: on ? 600 : 400,
+          pick: () => this.setState({ person: p.id })
+        });
+      }),
+      days: days,
+      empty: days.length === 0,
+      notEmpty: days.length > 0
+    };
+  }
+}
+</script>
+</body>
+</html>

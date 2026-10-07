@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en-GB" class="lm-light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Hommate</title>
+  <meta name="description" content="Chores, reminders and shared expenses for your house.">
+  <meta name="theme-color" content="#f5f5f7">
+  <meta name="color-scheme" content="light dark">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Hommate">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="/css/lumen.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <script>
+    // Set the theme before first paint so dark mode doesn't flash white.
+    try {
+      var t = JSON.parse(localStorage.getItem('hommate.theme') || '"auto"');
+      if (t === 'dark' || (t === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.className = 'lm-dark';
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <div id="app" aria-live="polite"></div>
+  <noscript><p style="padding:24px">Hommate needs JavaScript turned on.</p></noscript>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>
